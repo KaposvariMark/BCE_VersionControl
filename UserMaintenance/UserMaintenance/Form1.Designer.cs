@@ -32,6 +32,7 @@
             this.lblFullName = new System.Windows.Forms.Label();
             this.txtFullName = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnWriteCsv = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listUsers
@@ -64,15 +65,26 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(221, 38);
             this.btnAdd.TabIndex = 5;
-            this.btnAdd.Text = "Hozzáadás";
+            this.btnAdd.Text = "button1";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnWriteCsv
+            // 
+            this.btnWriteCsv.Location = new System.Drawing.Point(280, 145);
+            this.btnWriteCsv.Name = "btnWriteCsv";
+            this.btnWriteCsv.Size = new System.Drawing.Size(221, 38);
+            this.btnWriteCsv.TabIndex = 6;
+            this.btnWriteCsv.Text = "button2";
+            this.btnWriteCsv.UseVisualStyleBackColor = true;
+            this.btnWriteCsv.Click += new System.EventHandler(this.btnWriteCsv_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(539, 337);
+            this.Controls.Add(this.btnWriteCsv);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.txtFullName);
             this.Controls.Add(this.lblFullName);
@@ -90,6 +102,7 @@
         private System.Windows.Forms.Label lblFullName;
         private System.Windows.Forms.TextBox txtFullName;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnWriteCsv;
     }
 }
 

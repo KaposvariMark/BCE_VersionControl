@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UserMaintenance.Entities;
+using System.IO;
 
 namespace UserMaintenance
 {
@@ -21,6 +22,7 @@ namespace UserMaintenance
             InitializeComponent();
             lblFullName.Text = Resource1.FullName;
             btnAdd.Text = Resource1.Add;
+            btnWriteCsv.Text = Resource1.WriteCsv;
 
             listUsers.DataSource = users;
             listUsers.ValueMember = "ID";
@@ -34,6 +36,29 @@ namespace UserMaintenance
                 FullName = txtFullName.Text
             };
             users.Add(u);
+        }
+
+        private void btnWriteCsv_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Application.StartupPath;
+            sfd.Filter = "CSV|*.csv";
+            sfd.DefaultExt = "csv";
+            sfd.AddExtension = true;
+            sfd.Title = "Save a Csv File";
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            using (StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+            {
+                foreach (var user in users)
+                {
+                    sw.Write(user.FullName);
+                    sw.Write(";");
+                    sw.Write(user.ID);
+                    sw.Write("\n");
+                }
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace UserMaintenance.Entities
     class User
     {
         public Guid ID { get; set; } = Guid.NewGuid();
-        public String Firstname { get; set; }
+        public String FirstName { get; set; }
         public String LastName { get; set; }
         public String FullName
         {

@@ -69,7 +69,7 @@ namespace AbExport
 
             for (int i = 0; i < headers.Length; i++)
             {
-                xlSheet.Cells[1, i] = headers[i];
+                xlSheet.Cells[1, i+1] = headers[i];
             }
 
             object[,] values = new object[Flats.Count, headers.Length];
@@ -91,9 +91,9 @@ namespace AbExport
 
             xlSheet.get_Range(GetCell(2, 1), GetCell(1 + values.GetLength(0), values.GetLength(1))).Value2 = values;
 
-            for (int i = 0; i < counter; i++)
+            for (int i = 2; i < counter; i++)
             {
-                xlSheet.Cells[counter, 9] = "=" + GetCell(counter, 8)+ "/" + GetCell(counter, 7) + "*1000000";
+                xlSheet.Cells[i, 9] = "=" + GetCell(i, 8)+ "/" + GetCell(i, 7) + "*1000000";
             }
         }
 

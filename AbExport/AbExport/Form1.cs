@@ -95,6 +95,30 @@ namespace AbExport
             {
                 xlSheet.Cells[i, 9] = "=" + GetCell(i, 8)+ "/" + GetCell(i, 7) + "*1000000";
             }
+
+            // ------------------------------------ FORMÁZÁSOK ------------------------------------------
+
+            Excel.Range headerRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1, headers.Length));
+            headerRange.Font.Bold = true;
+            headerRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            headerRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            headerRange.EntireColumn.AutoFit();
+            headerRange.RowHeight = 40;
+            headerRange.Interior.Color = Color.LightBlue;
+            headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            int lastRowID = xlSheet.UsedRange.Rows.Count;
+            Excel.Range tableRange = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 9));
+            tableRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            Excel.Range firstColumnRange = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 1));
+            firstColumnRange.Font.Bold = true;
+
+            Excel.Range lastColumnRange = xlSheet.get_Range(GetCell(2, 9), GetCell(lastRowID, 9));
+            lastColumnRange.Interior.Color = Color.LightGreen;
+
+            // Felkerekítés missing
+
         }
 
         private string GetCell(int x, int y)

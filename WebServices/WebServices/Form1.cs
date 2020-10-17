@@ -7,18 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebServices.Entities;
 using WebServices.MnbServiceReference;
 
 namespace WebServices
 {
     public partial class Form1 : Form
     {
-
+        BindingList<RateData> Rates = new BindingList<RateData>();
 
         public Form1()
         {
             InitializeComponent();
             GetExchangeRates();
+            dataGridView1.DataSource = Rates;
         }
 
         private void GetExchangeRates()
@@ -33,7 +35,6 @@ namespace WebServices
             };
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
-            richTextBox1.Text = result;
         }
     }
 }

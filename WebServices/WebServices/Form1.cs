@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 using WebServices.Entities;
 using WebServices.MnbServiceReference;
@@ -21,7 +22,10 @@ namespace WebServices
         {
             InitializeComponent();
             dataGridView1.DataSource = Rates;
-            
+            chartRateData.DataSource = Rates;
+            ProcessXml();
+            ShowData();
+
         }
 
         private string GetExchangeRates()
@@ -59,6 +63,23 @@ namespace WebServices
                 if (unit != 0)
                     rate.Value = value / unit;
             }
+        }
+
+        private void ShowData()
+        {
+            var series = chartRateData.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Date";
+            series.YValueMembers = "Value";
+            series.BorderWidth = 2;
+
+            var legend = chartRateData.Legends[0];
+            legend.Enabled = false;
+
+            var chartArea = chartRateData.ChartAreas[0];
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = false;
+            chartArea.AxisY.IsStartedFromZero = false;
         }
     }
 }

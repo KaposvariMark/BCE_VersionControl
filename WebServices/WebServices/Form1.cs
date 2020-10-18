@@ -17,27 +17,34 @@ namespace WebServices
     public partial class Form1 : Form
     {
         BindingList<RateData> Rates = new BindingList<RateData>();
+        BindingList<string> Currencies = new BindingList<string>();
+        
 
         public Form1()
         {
             InitializeComponent();
+            ProcessXml();
             dataGridView1.DataSource = Rates;
             chartRateData.DataSource = Rates;
-            ProcessXml();
+            comboBox1.DataSource = Currencies;
             RefreshData();
 
+        }
+
+        private string GetCurrencies()
+        {
+            var mnbService = new MNBArfolyamServiceSoapClient();
+            var request = new GetCurrenciesRequestBody();
+            var response = mnbService.GetCurrencies(request); 
+            var result = response.GetCurrenciesResult;
+            return result;
         }
 
         private string GetExchangeRates()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
 
-            var request = new GetExchangeRatesRequestBody()
-            {
-                currencyNames = comboBox1.SelectedItem.ToString(),
-                startDate = dateTimePicker1.Value.ToString(),
-                endDate = dateTimePicker2.Value.ToString(),
-            };
+            var request = new GetExchangeRatesRequestBody();
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
             return result;
@@ -62,6 +69,18 @@ namespace WebServices
                 var value = decimal.Parse(childElement.InnerText);
                 if (unit != 0)
                     rate.Value = value / unit;
+            }
+
+            XmlDocument xml2 = new XmlDocument();
+            xml2.LoadXml(GetCurrencies());
+
+            foreach (XmlElement element in xml2.DocumentElement)
+            {
+                var childElement = (XmlElement)element.ChildNodes[0];
+                var currency = childElement.GetAttribute("curr");
+                if (childElement == null)
+                    continue;
+                Currencies.Add(currency);
             }
         }
 

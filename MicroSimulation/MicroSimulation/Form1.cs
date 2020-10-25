@@ -123,6 +123,9 @@ namespace MicroSimulation
 
         private void btn_Start_Click(object sender, EventArgs e)
         {
+            richTextBox1.Text = "";
+            MalePop.Clear();
+            FemalePop.Clear();
             Population = GetPopulation(textBox1.Text);
             Simulation(Convert.ToInt32(numericUpDown1.Value));
         }
@@ -148,6 +151,20 @@ namespace MicroSimulation
                 MalePop.Add(nbrOfMales);
                 FemalePop.Add(nbrOfFemales);
             }
+
+            DisplayResults(endyear);
+        }
+
+        private void DisplayResults(int endyear)
+        {
+            string output = string.Empty;
+
+            for (int year = 2005; year < endyear+1; year++)
+            {
+                output += "Szimulációs év:" + year + "\n \tFiúk: " + MalePop[year-2005]+"\n\tLányok: " + FemalePop[year-2005] +"\n\n";
+            }
+
+            richTextBox1.Text = output;
         }
 
         private void btn_Browse_Click(object sender, EventArgs e)

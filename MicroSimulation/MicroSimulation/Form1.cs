@@ -22,6 +22,8 @@ namespace MicroSimulation
         {
             InitializeComponent();
 
+            Random rng = new Random(1234);
+
             Population = GetPopulation(@"C:\Temp\nép.csv");
             BirthProbabilities = GetBirthProbabilities(@"C:\Temp\születés.csv");
             DeathProbabilities = GetDeathProbabilities(@"C:\Temp\halál.csv");

@@ -15,23 +15,33 @@ namespace ToyFactory
     public partial class Form1 : Form
     {
         private List<Toy> _toys = new List<Toy>();
-
-        private BallFactory _factory;
-        public BallFactory IToyFactory
+        private Toy _nextToy;
+        private IToyFactory _factory;
+        public IToyFactory Factory
         {
             get { return _factory; }
-            set { _factory = value; }
+            set { _factory = value; DisplayNext(); }
+        }
+
+        private void DisplayNext()
+        {
+            if (_nextToy != null)
+                Controls.Remove(_nextToy);
+            _nextToy = Factory.CreateNew();
+            _nextToy.Top = lblNext.Top + lblNext.Height + 20;
+            _nextToy.Left = lblNext.Left;
+            Controls.Add(_nextToy);
         }
 
         public Form1()
         {
             InitializeComponent();
-            IToyFactory = new BallFactory();
+            Factory = new BallFactory();
         }
 
         private void createTimer_Tick(object sender, EventArgs e)
         {
-            var ball = IToyFactory.CreateNew();
+            var ball = Factory.CreateNew();
             _toys.Add(ball);
             ball.Left = -ball.Width;
             mainPanel.Controls.Add(ball);
@@ -53,6 +63,16 @@ namespace ToyFactory
                 mainPanel.Controls.Remove(oldestBall);
                 _toys.Remove(oldestBall);
             }
+        }
+
+        private void btn_Car_Click(object sender, EventArgs e)
+        {
+            Factory = new CarFactory();
+        }
+
+        private void btn_Ball_Click(object sender, EventArgs e)
+        {
+            Factory = new BallFactory();
         }
     }
 }
